@@ -1,6 +1,6 @@
-﻿using LibGit2Sharp;
-using McMaster.Extensions.CommandLineUtils.Abstractions;
+﻿using McMaster.Extensions.CommandLineUtils.Abstractions;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -23,21 +23,38 @@ namespace VersionGenerator.Tool
             if (value?.StartsWith("git:") ?? false)
             {
                 var path = value.Substring(4, value.Length - 4);
-                if (Directory.Exists(path))
-                {
-                    try
-                    {
-                        var repository = new Repository(path);
-                        return repository.Head.Tip.Author.When;
-                    }
-                    catch (RepositoryNotFoundException ex)
-                    {
-                        throw new FormatException($"Invalid value specified for {argName}. {ex.Message}");
-                    }
-                }
-                else
+                if (!Directory.Exists(path))
                 {
                     throw new FormatException($"Invalid value specified for {argName}. Path '{path}' does not point at a valid directory.");
+                }
+
+                try
+                {
+                    var psi = new ProcessStartInfo("git", "log -1 --format=%ct");
+                    psi.WorkingDirectory = path;
+                    psi.RedirectStandardInput = true;
+                    psi.RedirectStandardOutput = true;
+                    psi.RedirectStandardError = true;
+                    psi.UseShellExecute = false;
+
+                    var process = Process.Start(psi);
+
+                    process.WaitForExit(10_000); // Time out after 10 seconds.
+
+                    if (process.ExitCode == 0)
+                    {
+                        var output = process.StandardOutput.ReadToEnd();
+                        if (Int64.TryParse(output, out var secondsSinceEpoch))
+                        {
+                            return DateTimeOffset.FromUnixTimeSeconds(secondsSinceEpoch);
+                        }
+                    }
+
+                    throw new FormatException($"Invalid value specified for {argName}. Could not calculate timestamp from git repository.");
+                }
+                catch (Exception ex)
+                {
+                    throw new FormatException($"Invalid value specified for {argName}. {ex.Message}");
                 }
             }
 

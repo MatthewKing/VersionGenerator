@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LibGit2Sharp" Version="0.25.4" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
   </ItemGroup>
 
