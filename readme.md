@@ -10,18 +10,18 @@ This project is still a work in progress, so there are only three formats availa
 
 In addition, I haven't come up with names for them yet, so they are currently just called `A`, `B`, and `C`.
 
-A: This is the same algorithm as Microsoft's automatic assembly versioning in .NET (you know, the one you get when you use a wildcard in your AssemblyVersionAttribute... `[AssemblyVersion("1.0.*")]`).
+**Type A**: This is the same algorithm as Microsoft's automatic assembly versioning in .NET (you know, the one you get when you use a wildcard in your AssemblyVersionAttribute... `[AssemblyVersion("1.0.*")]`).
 
-B: This is a MSI-friendly way of encoding the current date into a version, with all the restrictions that Windows Installer places on version numbers. I'll write more on this method later.
+**Type B**: This is a MSI-friendly way of encoding the current date into a version, with all the restrictions that Windows Installer places on version numbers. I'll write more on this method later.
 
-C: This is another take on the algorithm above. It has a lower resolution, but allows you to set the major version. I'll write more on this method later.
+**Type C**: This is another take on the algorithm above. It has a lower resolution, but allows you to set the major version. I'll write more on this method later.
 
 Quickstart
 ----------
 
 VersionGenerator is available both as a dotnet tool, and as a standard library.
 
-## Using the tool:
+### Using the tool:
 
 1) Install the tool:
 
