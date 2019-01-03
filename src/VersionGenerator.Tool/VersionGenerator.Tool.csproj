@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>vgen</ToolCommandName>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\VersionGenerator\VersionGenerator.csproj" />
   </ItemGroup>
