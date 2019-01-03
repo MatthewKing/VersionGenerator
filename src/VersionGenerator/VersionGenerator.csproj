@@ -5,4 +5,15 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>VersionGenerator</PackageId>
+    <Title>VersionGenerator</Title>
+    <Description>Generate version numbers in a variety of formats.</Description>
+    <Authors>Matthew King</Authors>
+    <Copyright>Copyright 2019 Matthew King.</Copyright>
+    <PackageProjectUrl>https://github.com/MatthewKing/VersionGenerator</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageTags>version</PackageTags>
+  </PropertyGroup>
+
 </Project>
