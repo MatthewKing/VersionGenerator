@@ -2,8 +2,16 @@
 
 namespace VersionGenerator
 {
+    /// <summary>
+    /// Provides functionality to generate type-B versions.
+    /// </summary>
     public static class VersionTypeB
     {
+        /// <summary>
+        /// Generates a new type-B version.
+        /// </summary>
+        /// <param name="timestamp">The timestamp to be encoded in the version number.</param>
+        /// <returns>A type-B version.</returns>
         public static Version GenerateFromTimestamp(DateTimeOffset timestamp)
         {
             var utcTimestamp = timestamp.ToUniversalTime();
