@@ -10,7 +10,7 @@
     <Title>VersionGenerator Tool</Title>
     <Description>Generate version numbers in a variety of formats.</Description>
     <Authors>Matthew King</Authors>
-    <Copyright>Copyright 2019 Matthew King.</Copyright>
+    <Copyright>Copyright 2019-2021 Matthew King.</Copyright>
     <PackageProjectUrl>https://github.com/MatthewKing/VersionGenerator</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>version</PackageTags>
