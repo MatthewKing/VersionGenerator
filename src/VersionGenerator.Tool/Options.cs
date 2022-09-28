@@ -24,7 +24,7 @@ internal static class Options
 
     public static Option<DateTimeOffset> Timestamp()
     {
-        return new Option<DateTimeOffset>(
+        var option = new Option<DateTimeOffset>(
             aliases: new[] { "--timestamp", "-t" },
             description: "Timestamp (\"now\", or \"git:<PATH>\", or \"yyyy-MM-ddTHH:mm:ssZ\")",
             parseArgument: result =>
@@ -39,5 +39,15 @@ internal static class Options
                     return DateTimeOffset.UtcNow;
                 }
             });
+
+        option.AddValidator(result =>
+        {
+            if (result.GetValueForOption(option).Year < 2000)
+            {
+                result.ErrorMessage = "This version format is only valid for dates in the year 2000 and later.";
+            }
+        });
+
+        return option;
     }
 }
