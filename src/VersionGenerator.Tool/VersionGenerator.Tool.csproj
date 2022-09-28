@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>VersionGenerator.Tool</PackageId>
     <Title>VersionGenerator Tool</Title>
     <Description>Generate version numbers in a variety of formats.</Description>
