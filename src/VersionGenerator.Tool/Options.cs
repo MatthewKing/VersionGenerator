@@ -1,4 +1,6 @@
-﻿using System.CommandLine;
+﻿using System;
+using System.CommandLine;
+using System.Linq;
 
 namespace VersionGenerator.Tool;
 
@@ -20,11 +22,22 @@ internal static class Options
             getDefaultValue: () => 0);
     }
 
-    public static Option<string> Timestamp()
+    public static Option<DateTimeOffset> Timestamp()
     {
-        return new Option<string>(
+        return new Option<DateTimeOffset>(
             aliases: new[] { "--timestamp", "-t" },
             description: "Timestamp (\"now\", or \"git:<PATH>\", or \"yyyy-MM-ddTHH:mm:ssZ\")",
-            getDefaultValue: () => "now");
+            parseArgument: result =>
+            {
+                if (TimestampParser.TryParse(result.Tokens.Single().Value, out var timestamp, out var errorMessage))
+                {
+                    return timestamp;
+                }
+                else
+                {
+                    result.ErrorMessage = string.Join(" ", "Invalid timestamp.", errorMessage);
+                    return DateTimeOffset.UtcNow;
+                }
+            });
     }
 }

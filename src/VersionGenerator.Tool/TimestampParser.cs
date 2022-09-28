@@ -6,12 +6,13 @@ namespace VersionGenerator.Tool;
 
 internal static class TimestampParser
 {
-    public static bool TryParse(string value, out DateTimeOffset timestamp)
+    public static bool TryParse(string value, out DateTimeOffset timestamp, out string message)
     {
         // Handle missing input.
         if (string.IsNullOrWhiteSpace(value))
         {
             timestamp = default;
+            message = "No timestamp value specified.";
             return false;
         }
 
@@ -19,6 +20,7 @@ internal static class TimestampParser
         if (string.Equals(value, "now", StringComparison.OrdinalIgnoreCase))
         {
             timestamp = DateTimeOffset.UtcNow;
+            message = null;
             return true;
         }
 
@@ -32,6 +34,7 @@ internal static class TimestampParser
             if (!Directory.Exists(path))
             {
                 timestamp = default;
+                message = $"Directory '{path}' does not exist.";
                 return false;
             }
 
@@ -52,6 +55,7 @@ internal static class TimestampParser
                 if (process.ExitCode != 0)
                 {
                     timestamp = default;
+                    message = $"Git exited unsuccessfully with exit code {process.ExitCode}.";
                     return false;
                 }
 
@@ -59,16 +63,21 @@ internal static class TimestampParser
                 if (Int64.TryParse(output, out var secondsSinceEpoch))
                 {
                     timestamp = DateTimeOffset.FromUnixTimeSeconds(secondsSinceEpoch);
+                    message = null;
                     return true;
                 }
                 else
                 {
-                    // ToDo: Handle input that can't be parsed.
+                    timestamp = default;
+                    message = $"Value '{output}' cannot be parsed as a unix timestamp.";
+                    return false;
                 }
             }
             catch (Exception ex)
             {
-                // ToDo: Handle exeptions?
+                timestamp = default;
+                message = ex.Message;
+                return false;
             }
         }
 
@@ -76,10 +85,14 @@ internal static class TimestampParser
         if (DateTimeOffset.TryParse(value, out var parsed))
         {
             timestamp = parsed;
+            message = null;
             return true;
         }
-
-        timestamp = default;
-        return false;
+        else
+        {
+            timestamp = default;
+            message = $"Value '{value}' cannot be parsed as a timestamp.";
+            return false;
+        }
     }
 }
