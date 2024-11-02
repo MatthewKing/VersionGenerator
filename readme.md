@@ -58,6 +58,6 @@ var version = VersionTypeA.GenerateFromTimestamp(timestamp: DateTimeOffset.Now, 
 License and copyright
 ---------------------
 
-Copyright Matthew King 2022.
+Copyright Matthew King.
 Distributed under the [MIT License](http://opensource.org/licenses/MIT).
 Refer to license.txt for more information.
