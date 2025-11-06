@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/VersionGenerator.Tool/VersionGenerator.Tool.csproj" />
+  <Project Path="src/VersionGenerator/VersionGenerator.csproj" />
+</Solution>
