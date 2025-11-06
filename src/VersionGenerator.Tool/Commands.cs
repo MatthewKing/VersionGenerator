@@ -43,4 +43,30 @@ public static class Commands
 
         return command;
     }
+
+    public static Command D(Option<int> majorOption, Option<DateTimeOffset> timestampOption)
+    {
+        var command = new Command("D") { majorOption, timestampOption };
+        command.Description = "Generates a version using the type-D format";
+        command.SetHandler((int major, DateTimeOffset timestamp) =>
+        {
+            var version = VersionTypeD.GenerateFromTimestamp(timestamp, major);
+            Console.WriteLine(version);
+        }, majorOption, timestampOption);
+
+        return command;
+    }
+
+    public static Command E(Option<int> majorOption, Option<DateTimeOffset> epochOption, Option<DateTimeOffset> timestampOption)
+    {
+        var command = new Command("E") { majorOption, epochOption, timestampOption };
+        command.Description = "Generates a version using the type-D format";
+        command.SetHandler((int major, DateTimeOffset epoch, DateTimeOffset timestamp) =>
+        {
+            var version = VersionTypeE.GenerateFromTimestamp(timestamp, major, epoch);
+            Console.WriteLine(version);
+        }, majorOption, epochOption, timestampOption);
+
+        return command;
+    }
 }

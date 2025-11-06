@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace VersionGenerator.Tool;
 
@@ -79,6 +80,13 @@ internal static class TimestampParser
                 message = ex.Message;
                 return false;
             }
+        }
+
+        if (Regex.IsMatch(value, "[0-9]{4}") && int.TryParse(value, out var year))
+        {
+            timestamp = new DateTimeOffset(year, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            message = null;
+            return true;
         }
 
         // Finally, we'll just try to parse the value as normal.

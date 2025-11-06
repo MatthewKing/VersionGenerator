@@ -22,6 +22,27 @@ internal static class Options
             getDefaultValue: () => 0);
     }
 
+    public static Option<DateTimeOffset> Epoch()
+    {
+        var option = new Option<DateTimeOffset>(
+            aliases: new[] { "--epoch", "-e" },
+            description: "Epoch timestamp (\"now\", or \"yyyy\", or \"yyyy-MM-ddZ\", or \"yyyy-MM-ddTHH:mm:ssZ\")",
+            parseArgument: result =>
+            {
+                if (TimestampParser.TryParse(result.Tokens.Single().Value, out var timestamp, out var errorMessage))
+                {
+                    return timestamp;
+                }
+                else
+                {
+                    result.ErrorMessage = string.Join(" ", "Invalid timestamp.", errorMessage);
+                    return DateTimeOffset.UtcNow;
+                }
+            });
+
+        return option;
+    }
+
     public static Option<DateTimeOffset> Timestamp()
     {
         var option = new Option<DateTimeOffset>(
